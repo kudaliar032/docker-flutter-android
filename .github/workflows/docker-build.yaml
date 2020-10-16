@@ -18,4 +18,4 @@ jobs:
           context: .
           file: ./${{ matrix.apilevel }}.Dockerfile
           push: true
-          tags: ${{ env.GITHUB_REPOSITORY }}:${{ matrix.apilevel }}
+          tags: ${{ github.repository }}:${{ matrix.apilevel }}
