@@ -9,7 +9,11 @@ RUN apt update -y \
   && mkdir -p /opt/android-sdk-linux \
   && curl $SDK_URL -o /tmp/commandlinetools.zip \
   && unzip /tmp/commandlinetools.zip -d /opt/android-sdk-linux/cmdline-tools \
-  && yes | sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.2" \
+  && yes | sdkmanager \
+    "platform-tools" \
+    "platforms;android-29" \
+    "platforms;android-30" \
+    `sdkmanager --list | grep build-tools | tail -1 | awk '{print $1}'` \
   && yes | sdkmanager --licenses \
   && cd /opt \
   && git clone https://github.com/flutter/flutter.git \

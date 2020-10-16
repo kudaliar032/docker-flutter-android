@@ -1,0 +1,21 @@
+name: Docker image actions
+on:
+  push:
+    branches: [master]
+jobs:
+  build_push_image:
+    name: Build and Push to GitHub Registry (API Level ${{ matrix.apilevel }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        apilevel: [28, 29, 30]
+    steps:
+      - name: Checkout the Repo
+        uses: actions/checkout@v2
+      - name: Build and Push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./${{ matrix.apilevel }}.Dockerfile
+          push: true
+          tags: ${{ env.GITHUB_REPOSITORY }}:${{ matrix.apilevel }}
